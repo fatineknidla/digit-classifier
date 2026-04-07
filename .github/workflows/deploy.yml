@@ -22,7 +22,8 @@ jobs:
       
     permissions:
       contents: read
-      packages: write
+      packages: write  # This is the key line
+      id-token: write  # Required if using certain OIDC providers
 
     steps:
       - name: Checkout repository
