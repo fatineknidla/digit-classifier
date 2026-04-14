@@ -31,7 +31,8 @@ if canvas_result.image_data is not None:
         byte_im = buf.getvalue()
         
         try:
-            response = requests.post("http://api:8000/predict", files=files)
+            files = {"file": ("image.png", byte_im, "image/png")}
+            response = requests.post("http://127.0.0.1:8000/predict", files=files)
             data = response.json()
             st.header(f"Result: {data['prediction']}")
             st.subheader(f"Confidence: {data['confidence']}")
