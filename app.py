@@ -3,6 +3,13 @@ from streamlit_drawable_canvas import st_canvas
 import requests
 from PIL import Image
 import io
+import os
+
+# Priority: Streamlit secrets > env var > local default
+if "BACKEND_URL" in st.secrets:
+    BACKEND_URL = st.secrets["BACKEND_URL"]
+else:
+    BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000/predict")
 
 st.title("MNIST Digit Recognizer")
 st.write("Draw a digit (0-9) below!")
@@ -32,7 +39,7 @@ if canvas_result.image_data is not None:
         
         try:
             files = {"file": ("image.png", byte_im, "image/png")}
-            response = requests.post("http://127.0.0.1:8000/predict", files=files)
+            response = requests.post(BACKEND_URL, files=files)
             data = response.json()
             st.header(f"Result: {data['prediction']}")
             st.subheader(f"Confidence: {data['confidence']}")
