@@ -40,8 +40,12 @@ if canvas_result.image_data is not None:
         try:
             files = {"file": ("image.png", byte_im, "image/png")}
             response = requests.post(BACKEND_URL, files=files)
-            data = response.json()
-            st.header(f"Result: {data['prediction']}")
-            st.subheader(f"Confidence: {data['confidence']}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                st.header(f"Result: {data['prediction']}")
+                st.subheader(f"Confidence: {data['confidence']}")
+            else:
+                st.error(f"API Error ({response.status_code}): {response.text}")
         except Exception as e:
             st.error(f"Error connecting to API: {e}")
