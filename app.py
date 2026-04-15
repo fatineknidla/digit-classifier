@@ -9,7 +9,11 @@ import os
 if "BACKEND_URL" in st.secrets:
     BACKEND_URL = st.secrets["BACKEND_URL"]
 else:
-    BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000/predict")
+    BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+
+# Ensure the URL ends with /predict
+if not BACKEND_URL.endswith("/predict"):
+    BACKEND_URL = f"{BACKEND_URL.rstrip('/')}/predict"
 
 st.title("MNIST Digit Recognizer")
 st.write("Draw a digit (0-9) below!")
