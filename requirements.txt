@@ -1,0 +1,9 @@
+fastapi
+python-multipart
+uvicorn
+streamlit
+streamlit-drawable-canvas
+Pillow
+requests
+torch
+torchvision
